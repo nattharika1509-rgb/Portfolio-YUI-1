@@ -1,0 +1,665 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+}
+
+:root {
+  --background: oklch(0.98 0.01 240); /* Very soft blue-ish background */
+  --foreground: oklch(0.2 0.02 240);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.02 240);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.02 240);
+  --primary: oklch(0.85 0.08 340); /* Pastel Pink */
+  --primary-foreground: oklch(0.98 0.01 340);
+  --secondary: oklch(0.9 0.06 220); /* Pastel Blue */
+  --secondary-foreground: oklch(0.2 0.02 220);
+  --muted: oklch(0.95 0.02 220);
+  --muted-foreground: oklch(0.5 0.02 220);
+  --accent: oklch(0.92 0.05 160); /* Pastel Mint */
+  --accent-foreground: oklch(0.2 0.02 160);
+  --destructive: oklch(0.6 0.15 25);
+  --border: oklch(0.9 0.02 240 / 30%);
+  --input: oklch(0.9 0.02 240 / 30%);
+  --ring: oklch(0.85 0.08 340 / 50%);
+  --radius: 1rem;
+}
+
+.dark {
+  --background: oklch(0.15 0.02 240);
+  --foreground: oklch(0.98 0.01 240);
+  --card: oklch(0.2 0.02 240);
+  --card-foreground: oklch(0.98 0.01 240);
+  --popover: oklch(0.2 0.02 240);
+  --popover-foreground: oklch(0.98 0.01 240);
+  --primary: oklch(0.75 0.1 340);
+  --primary-foreground: oklch(0.15 0.02 340);
+  --secondary: oklch(0.3 0.08 220);
+  --secondary-foreground: oklch(0.95 0.02 220);
+  --muted: oklch(0.25 0.05 240);
+  --muted-foreground: oklch(0.7 0.02 240);
+  --accent: oklch(0.3 0.08 160);
+  --accent-foreground: oklch(0.95 0.02 160);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.75 0.1 340 / 50%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground transition-colors duration-500;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+.glass {
+  @apply bg-white/30 dark:bg-black/30 backdrop-blur-xl border border-white/20 dark:border-white/10;
+}
+
+.pastel-gradient {
+  background: linear-gradient(135deg, oklch(0.95 0.05 340), oklch(0.95 0.05 220));
+}
+.uiverse-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px oklch(0.85 0.08 340 / 30%);
+}
+
+.uiverse-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px oklch(0.85 0.08 340 / 50%);
+}
+
+.uiverse-card {
+  transition: all 0.5s;
+  background: linear-gradient(145deg, oklch(1 0 0 / 80%), oklch(1 0 0 / 40%));
+  box-shadow: 20px 20px 60px oklch(0.9 0.02 240 / 50%), -20px -20px 60px oklch(1 0 0);
+}
+
+.dark .uiverse-card {
+  background: linear-gradient(145deg, oklch(0.25 0.05 240 / 80%), oklch(0.2 0.02 240 / 40%));
+  box-shadow: 10px 10px 30px oklch(0 0 0 / 50%), -10px -10px 30px oklch(1 0 0 / 5%);
+}
+
+/* UIverse-inspired Glass Card */
+.glass-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 
+    0 8px 32px rgba(0,0,0,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.capybara-mini {
+  display: inline-block;
+  width: 50px;
+  height: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.capybara-mini::before {
+  content: '';
+  position: absolute;
+  width: 35px;
+  height: 20px;
+  background: linear-gradient(135deg, rgb(204, 125, 45), rgb(83, 56, 28));
+  border-radius: 40% 40% 30% 30%;
+  top: 8px;
+  left: 0;
+  animation: capyBodyMove 2s ease-in-out infinite;
+}
+
+.capybara-mini::after {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: rgb(204, 125, 45);
+  border-radius: 50%;
+  top: 0;
+  right: 2px;
+  box-shadow: -4px 0 rgb(83, 56, 28);
+  animation: capyHeadMove 2s ease-in-out infinite;
+}
+
+@keyframes capyBodyMove {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(8px); }
+  50% { transform: translateX(0); }
+  75% { transform: translateX(-8px); }
+}
+
+@keyframes capyHeadMove {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(10px); }
+  50% { transform: translateX(0); }
+  75% { transform: translateX(-10px); }
+}
+
+.dark .glass-card {
+  background: linear-gradient(135deg, rgba(30,30,40,0.4) 0%, rgba(20,20,30,0.1) 100%);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 
+    0 8px 32px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* Eye Animation for Navigation - From Uiverse.io by HyuOniichan */
+.eye-icon {
+  width: 30px;
+  height: 20px;
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.eye-icon .up {
+  position: absolute;
+  top: 0px;
+  height: 20px;
+  width: 30px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.eye-icon .down {
+  position: absolute;
+  top: -12px;
+  height: 20px;
+  width: 30px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.eye-icon .mid {
+  position: absolute;
+  top: 1px;
+  left: 10px;
+  width: 10px;
+  height: 10px;
+  border: none;
+  border-radius: 50%;
+  background-color: black;
+  z-index: 0;
+  animation: eyemove 4s infinite;
+}
+
+@keyframes eyemove {
+  0% {
+    left: 8px;
+    background-color: rgb(164, 213, 230);
+  }
+  50% {
+    left: 12px;
+    background-color: rgb(45, 187, 235);
+  }
+  100% {
+    left: 8px;
+    background-color: rgb(164, 213, 230);
+  }
+}
+
+/* Spinner Animation - From Uiverse.io by satyamchaudharydev */
+.spinner {
+  --size: 20px;
+  --first-block-clr: #4ade80;
+  --second-block-clr: #22c55e;
+  --clr: #111;
+  width: 30px;
+  height: 30px;
+}
+
+.spinner::after,.spinner::before {
+  box-sizing: border-box;
+  position: absolute;
+  content: "";
+  width: var(--size);
+  height: var(--size);
+  top: 50%;
+  animation: up 2.4s cubic-bezier(0, 0, 0.24, 1.21) infinite;
+  left: 50%;
+  background: var(--first-block-clr);
+}
+
+.spinner::after {
+  background: var(--second-block-clr);
+  top: calc(50% - var(--size));
+  left: calc(50% - var(--size));
+  animation: down 2.4s cubic-bezier(0, 0, 0.24, 1.21) infinite;
+}
+
+@keyframes down {
+  0%, 100% {
+    transform: none;
+  }
+  25% {
+    transform: translateX(100%);
+  }
+  50% {
+    transform: translateX(100%) translateY(100%);
+  }
+  75% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes up {
+  0%, 100% {
+    transform: none;
+  }
+  25% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(-100%) translateY(-100%);
+  }
+  75% {
+    transform: translateY(-100%);
+  }
+}
+
+/* Capybara Walker - Large walking capybara */
+.capybara-walker {
+  position: absolute;
+  top: 50%;
+  left: -200px;
+  transform: translateY(-50%);
+  animation: walkAcross 20s linear infinite;
+  z-index: 5;
+  pointer-events: none;
+}
+
+@keyframes walkAcross {
+  0% { left: -200px; }
+  100% { left: 110vw; }
+}
+
+.capybara-large {
+  width: 180px;
+  height: 100px;
+  position: relative;
+}
+
+.capy-body {
+  width: 120px;
+  height: 70px;
+  background: linear-gradient(135deg, rgb(204, 125, 45), rgb(83, 56, 28));
+  border-radius: 40% 50% 35% 35%;
+  position: absolute;
+  bottom: 15px;
+  left: 30px;
+  animation: bodyWalk 0.8s ease-in-out infinite;
+}
+
+.capy-head {
+  width: 50px;
+  height: 45px;
+  background: linear-gradient(135deg, rgb(204, 125, 45), rgb(83, 56, 28));
+  border-radius: 40% 45% 35% 35%;
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  animation: headWalk 0.8s ease-in-out infinite;
+}
+
+.capy-ear {
+  width: 12px;
+  height: 15px;
+  background: rgb(180, 110, 40);
+  border-radius: 50% 50% 30% 30%;
+  position: absolute;
+  top: -5px;
+}
+
+.capy-ear:first-child { left: 8px; }
+.capy-ear:last-child { right: 8px; }
+
+.capy-face {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  display: flex;
+  gap: 12px;
+}
+
+.capy-eye {
+  width: 6px;
+  height: 6px;
+  background: rgb(30, 20, 10);
+  border-radius: 50%;
+}
+
+.capy-nose {
+  width: 10px;
+  height: 8px;
+  background: rgb(40, 25, 15);
+  border-radius: 30%;
+  position: absolute;
+  right: -5px;
+  top: 8px;
+}
+
+.capy-legs {
+  position: absolute;
+  bottom: 0;
+  left: 40px;
+  display: flex;
+  gap: 20px;
+}
+
+.capy-leg {
+  width: 12px;
+  height: 20px;
+  background: linear-gradient(135deg, rgb(180, 110, 40), rgb(70, 50, 25));
+  border-radius: 30% 30% 20% 20%;
+  animation: legWalk 0.8s ease-in-out infinite;
+}
+
+.capy-leg:nth-child(1), .capy-leg:nth-child(3) {
+  animation-delay: 0s;
+}
+
+.capy-leg:nth-child(2), .capy-leg:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bodyWalk {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes headWalk {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes legWalk {
+  0%, 100% { height: 20px; transform: translateY(0); }
+  50% { height: 15px; transform: translateY(-5px); }
+}
+
+/* Space Button Style for Professional Portfolio - From Uiverse.io by StealthWorm */
+.space-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  min-width: 8rem;
+  overflow: hidden;
+  height: 2rem;
+  padding: 0 1rem;
+  background-size: 300% 300%;
+  cursor: pointer;
+  backdrop-filter: blur(1rem);
+  border-radius: 3rem;
+  transition: 0.5s;
+  animation: gradient_301 5s ease infinite;
+  border: double 2px transparent;
+  background-image: linear-gradient(#212121, #212121),
+    linear-gradient(
+      137.48deg,
+      #ffdb3b 10%,
+      #fe53bb 45%,
+      #8f51ea 67%,
+      #0044ff 87%
+    );
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+
+.space-btn-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.space-btn strong {
+  z-index: 2;
+  font-family: "Avalors Personal Use", sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #ffffff;
+  text-shadow: 0 0 4px white;
+}
+
+#container-stars {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: 0.5s;
+  backdrop-filter: blur(1rem);
+  border-radius: 5rem;
+}
+
+#glow {
+  position: absolute;
+  display: flex;
+  width: 12rem;
+  z-index: 0;
+}
+
+#glow .circle {
+  width: 100%;
+  height: 30px;
+  filter: blur(2rem);
+  animation: pulse_3011 4s infinite;
+  z-index: -1;
+}
+
+#glow .circle:nth-of-type(1) {
+  background: rgba(254, 83, 186, 0.636);
+}
+
+#glow .circle:nth-of-type(2) {
+  background: rgba(142, 81, 234, 0.704);
+}
+
+#stars {
+  position: relative;
+  background: transparent;
+  width: 200rem;
+  height: 200rem;
+}
+
+#stars::after {
+  content: "";
+  position: absolute;
+  top: -10rem;
+  left: -100rem;
+  width: 100%;
+  height: 100%;
+  animation: animStarRotate 90s linear infinite;
+  background-image: radial-gradient(#ffffff 1px, transparent 1%);
+  background-size: 50px 50px;
+}
+
+#stars::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 170%;
+  height: 500%;
+  animation: animStar 60s linear infinite;
+  background-image: radial-gradient(#ffffff 1px, transparent 1%);
+  background-size: 50px 50px;
+  opacity: 0.5;
+}
+
+@keyframes animStar {
+  from { transform: translateY(0); }
+  to { transform: translateY(-135rem); }
+}
+
+@keyframes animStarRotate {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0); }
+}
+
+@keyframes gradient_301 {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse_3011 {
+  0% { transform: scale(0.75); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 0, 0, 0); }
+  100% { transform: scale(0.75); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+}
+
+/* Download Button Style - From Uiverse.io by barisdogansutcu */
+.download-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 20px;
+  color: white;
+  text-shadow: 2px 2px rgb(116, 116, 116);
+  text-transform: uppercase;
+  cursor: pointer;
+  border: solid 2px black;
+  letter-spacing: 1px;
+  font-weight: 600;
+  font-size: 14px;
+  background-color: hsl(49deg 98% 60%);
+  border-radius: 50px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
+
+.download-btn:active {
+  transform: scale(0.9);
+  transition: all 100ms ease;
+}
+
+.download-btn svg {
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+
+.download-btn .play {
+  transition: all 0.5s ease;
+  transition-delay: 300ms;
+}
+
+.download-btn:hover svg {
+  transform: scale(3) translate(50%);
+}
+
+.download-btn .now {
+  position: absolute;
+  left: 0;
+  transform: translateX(-100%);
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+
+.download-btn:hover .now {
+  transform: translateX(10px);
+  transition-delay: 300ms;
+}
+
+.download-btn:hover .play {
+  transform: translateX(200%);
+  transition-delay: 300ms;
+}
+
+/* Contact Button - From Uiverse.io by joe-watson-sbf */
+.contact-btn {
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+  line-height: 8px;
+  border-radius: 30px;
+  border: none;
+  background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  height: auto;
+}
+
+.contact-btn > * {
+  display: inline-block;
+  transition: all ease-in-out .5s;
+}
+
+.contact-btn .btn__visible {
+  padding: 1.2rem 3rem;
+  text-align: center;
+}
+
+.contact-btn .btn__invisible {
+  width: 100%;
+  position: absolute;
+  padding: 1.2rem 0;
+  left: 0;
+  top: -100%;
+}
+
+.contact-btn:hover {
+  background-image: linear-gradient(160deg, #f093fb 0%, #f5576c 100%);
+}
+
+.contact-btn:hover .btn__visible {
+  transform: translateY(100%);
+}
+
+.contact-btn:hover .btn__invisible {
+  top: 0;
+}
+
+.contact-btn:focus {
+  outline: none;
+}
