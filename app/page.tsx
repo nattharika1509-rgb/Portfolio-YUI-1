@@ -310,7 +310,7 @@ export default function Home() {
                 <span className="btn__invisible">ติดต่อฉัน</span>
               </button>
               <a
-                href="/Resume-Nattarika.pdf"
+                href="/Portfolio-YUI-1/Resume-Nattarika.pdf"
                 download
                 className="btn-donate inline-flex items-center justify-center gap-2"
               >
@@ -370,7 +370,7 @@ export default function Home() {
                   style={{ transform: "translateZ(50px)" }}
                 >
                   <Image 
-                    src="/profile-3d.png" 
+                    src="/Portfolio-YUI-1/profile-3d.png" 
                     alt="Profile" 
                     fill
                     priority
