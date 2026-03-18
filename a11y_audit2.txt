@@ -1,0 +1,56 @@
+
+============================================================
+[ACCESSIBILITY CHECKER] WCAG Compliance Audit
+============================================================
+Project: D:\React\my-project\alex\main
+Time: 2026-03-19 00:01:08
+------------------------------------------------------------
+Found 50 HTML/JSX/TSX files
+
+============================================================
+ACCESSIBILITY ISSUES
+============================================================
+
+layout.tsx:
+  - Consider adding skip-to-main-content link
+
+page.tsx:
+  - Consider adding skip-to-main-content link
+  - onClick without keyboard handler (onKeyDown)
+
+contact-form.tsx:
+  - Missing lang attribute on <html>
+
+repositories-section.tsx:
+  - onClick without keyboard handler (onKeyDown)
+
+sprite-scene.tsx:
+  - Missing lang attribute on <html>
+
+auth-layout.tsx:
+  - Missing lang attribute on <html>
+
+data-table.tsx:
+  - Input without label or aria-label
+  - onClick without keyboard handler (onKeyDown)
+
+form-pattern.tsx:
+  - Input without label or aria-label
+
+auth-layout.tsx:
+  - Missing lang attribute on <html>
+
+data-table.tsx:
+  - Input without label or aria-label
+  - onClick without keyboard handler (onKeyDown)
+
+... and 40 more files with issues
+
+{
+  "script": "accessibility_checker",
+  "project": "D:\\React\\my-project\\alex\\main",
+  "files_checked": 50,
+  "files_with_issues": 50,
+  "issues_found": 66,
+  "passed": false
+}

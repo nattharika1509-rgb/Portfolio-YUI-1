@@ -1,14 +1,34 @@
 "use client";
 
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, MapPin, GraduationCap, Briefcase, User, Code, Smartphone, Car, Download } from "lucide-react";
+import React, { useMemo } from "react";
+import { 
+  motion, 
+  useTransform, 
+  useSpring, 
+  useMotionValue
+} from "framer-motion";
+import { 
+  Mail, 
+  Phone, 
+  MapPin, 
+  GraduationCap, 
+  Briefcase, 
+  User, 
+  Code, 
+  Smartphone, 
+  Download 
+} from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import ContactForm from "@/components/contact-form";
 import RepositoriesSection from "@/components/repositories-section";
+
+// Pure pseudo-random function to satisfy React purity rules
+const pseudoRandom = (seed: number) => {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+};
 
 const SpriteScene = dynamic(() => import("@/components/sprite-scene"), {
   ssr: false,
@@ -81,7 +101,83 @@ const Section = ({ title, icon: Icon, children, id }: { title: string; icon: Rea
     {children}
   </motion.section>
 );
+
+interface Particle {
+  left: string;
+  scale: number;
+  rotate: number;
+  duration: number;
+  delay: number;
+  x: number;
+  element: string;
+}
+
+const FallingElements = () => {
+  const particles = useMemo<Particle[]>(() => {
+    const elements = ["🌸", "💛", "❤️", "✨"];
+    return [...Array(15)].map((_, i) => ({
+      left: `${(i * 7 + pseudoRandom(i + 1) * 5) % 100}%`,
+      scale: 0.5 + (i % 5) * 0.1,
+      rotate: i * 45,
+      duration: 8 + (i % 4) * 2,
+      delay: i * 0.5,
+      x: (i % 2 === 0 ? 1 : -1) * 50,
+      element: elements[i % elements.length]
+    }));
+  }, []);
+
+  return (
+    <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden select-none" style={{ zIndex: 5 }}>
+      {particles.map((p, i) => (
+        <motion.div
+          key={i}
+          initial={{ 
+            top: -50, 
+            left: p.left,
+            opacity: 0,
+            scale: p.scale,
+            rotate: p.rotate
+          }}
+          animate={{ 
+            top: "110%",
+            opacity: [0, 1, 1, 0],
+            rotate: p.rotate + 360,
+            x: [0, p.x, 0]
+          }}
+          transition={{ 
+            duration: p.duration,
+            repeat: Infinity,
+            delay: p.delay,
+            ease: "easeInOut"
+          }}
+          className="absolute text-2xl"
+        >
+          {p.element}
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
 export default function Home() {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useSpring(useTransform(y, [-100, 100], [15, -15]), { stiffness: 150, damping: 20 });
+  const rotateY = useSpring(useTransform(x, [-100, 100], [-15, 15]), { stiffness: 150, damping: 20 });
+
+  const handleMouseMove = (event: React.MouseEvent) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    x.set(event.clientX - centerX);
+    y.set(event.clientY - centerY);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
   const scrollToContact = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -106,7 +202,7 @@ export default function Home() {
         <div suppressHydrationWarning className="glass-card mx-2 md:mx-4 rounded-2xl px-2 md:px-4 py-1 md:py-2 flex items-center justify-between overflow-x-auto relative">
           
           {/* Capybara Loader Background - Walking Left to Right */}
-          <div className="absolute inset-0 opacity-30 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+          <div aria-hidden="true" className="absolute inset-0 opacity-30 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
             <div className="absolute top-[65%] -translate-y-1/2" style={{ animation: 'walkTab 25s linear infinite' }}>
               <div className="capybaraloader origin-left scale-[0.18] md:scale-[0.22]">
               <div className="capybara">
@@ -138,8 +234,8 @@ export default function Home() {
             </div>
           </div>
 
-          <a href="#" className="flex items-center gap-1 md:gap-2 text-base md:text-xl font-bold text-secondary uiverse-nav-logo flex-shrink-0 relative z-10">
-            <span className="eye-icon">
+          <a href="#" aria-label="Home" className="flex items-center gap-1 md:gap-2 text-base md:text-xl font-bold text-secondary uiverse-nav-logo flex-shrink-0 relative z-10">
+            <span aria-hidden="true" className="eye-icon">
               <div className="up"></div>
               <div className="down"></div>
               <div className="mid"></div>
@@ -170,6 +266,9 @@ export default function Home() {
       {/* 3D Background with Three.js Sprites */}
       <SpriteScene />
 
+      {/* Falling Elements Overlay */}
+      <FallingElements />
+
       {/* Hero Content */}
       <header suppressHydrationWarning className="relative z-10 min-h-screen flex items-center justify-center p-8 overflow-hidden">
         <div suppressHydrationWarning className="max-w-5xl w-full grid md:grid-cols-2 gap-12 items-center">
@@ -181,8 +280,7 @@ export default function Home() {
             suppressHydrationWarning 
             className="text-center md:text-left"
           >
-            <motion.div variants={heroItemVariants} suppressHydrationWarning className="space-btn inline-block mb-6">
-              <div className="space-btn-inner">
+            <motion.button variants={heroItemVariants} suppressHydrationWarning className="space-btn mb-6">
                 <strong>PROFESSIONAL PORTFOLIO</strong>
                 <div id="container-stars">
                   <div id="stars" />
@@ -191,8 +289,7 @@ export default function Home() {
                   <div className="circle" />
                   <div className="circle" />
                 </div>
-              </div>
-            </motion.div>
+            </motion.button>
             
             <motion.h1 variants={heroItemVariants} className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
               <span className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
@@ -215,40 +312,79 @@ export default function Home() {
               <a
                 href="/Resume-Nattarika.pdf"
                 download
-                className="download-btn inline-flex items-center gap-2 px-6 h-12 rounded-full font-medium"
+                className="btn-donate inline-flex items-center justify-center gap-2"
               >
-                <span className="now"><Download size={18} /></span>
-                <span className="play">ดาวน์โหลด CV</span>
+                <Download size={18} />
+                <span>ดาวน์โหลด CV</span>
               </a>
             </motion.div>
           </motion.div>
 
-          {/* Right Side - Profile Image */}
+          {/* Right Side - Profile Image with Glow Loader & Overflow Flowers */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.4 }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{ 
+              perspective: 1000,
+              rotateX,
+              rotateY,
+            }}
             suppressHydrationWarning 
-            className="relative"
+            className="relative cursor-pointer group flex items-center justify-center pt-8"
           >
-            <div suppressHydrationWarning className="relative w-64 h-64 md:w-80 md:h-80 mx-auto">
-              <div suppressHydrationWarning className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent rounded-full blur-3xl opacity-50" />
-              <div suppressHydrationWarning className="relative w-full h-full">
-                <Image 
-                  src="/profile.png" 
-                  alt="Profile" 
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 256px, 320px"
-                  className="object-cover rounded-full border-4 border-white/30 shadow-2xl bg-white"
-                />
+            <div className="loader-wrapper">
+              <div className="loader-glow" />
+              
+              {/* Floating Flowers (Overflowing outside the circle) */}
+              <div className="absolute inset-0 z-10 pointer-events-none overflow-visible">
+                 <motion.span 
+                   animate={{ y: [0, -10, 0], rotate: [0, 15, 0] }}
+                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                   className="absolute -top-6 -right-6 text-5xl filter drop-shadow-lg"
+                 >🌸</motion.span>
+                 <motion.span 
+                   animate={{ y: [0, -15, 0], rotate: [0, -20, 0] }}
+                   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                   className="absolute -top-12 left-12 text-4xl filter drop-shadow-lg"
+                 >🌸</motion.span>
+                 <motion.span 
+                   animate={{ y: [0, -8, 0], rotate: [0, 10, 0] }}
+                   transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                   className="absolute top-2 -left-8 text-3xl filter drop-shadow-lg"
+                 >🌸</motion.span>
+                 <motion.span 
+                   animate={{ scale: [1, 1.2, 1], opacity: [0.6, 1, 0.6] }}
+                   transition={{ duration: 2, repeat: Infinity }}
+                   className="absolute bottom-10 -right-8 text-2xl"
+                 >✨</motion.span>
+              </div>
+
+              <div suppressHydrationWarning className="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center z-1">
+                <div suppressHydrationWarning className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity" />
+                <div 
+                  suppressHydrationWarning 
+                  className="relative w-[110%] h-[110%] transform-preserve-3d transition-transform duration-200"
+                  style={{ transform: "translateZ(50px)" }}
+                >
+                  <Image 
+                    src="/profile-3d.png" 
+                    alt="Profile" 
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 256px, 320px"
+                    className="object-cover rounded-full border-4 border-white/30 shadow-2xl bg-white scale-100 group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
               </div>
             </div>
           </motion.div>
         </div>
 
         {/* Scroll Indicator */}
-        <div suppressHydrationWarning className="absolute bottom-10 left-1/2 -translate-x-1/2 text-muted-foreground/50">
+        <div aria-hidden="true" suppressHydrationWarning className="absolute bottom-10 left-1/2 -translate-x-1/2 text-muted-foreground/50">
           <div suppressHydrationWarning className="w-6 h-10 rounded-full border-2 border-current flex justify-center pt-2">
             <div suppressHydrationWarning className="w-1.5 h-1.5 rounded-full bg-current" />
           </div>
@@ -324,16 +460,28 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
+                whileHover={{ 
+                  scale: 1.02, 
+                  rotateY: 5, 
+                  rotateX: -2,
+                  translateZ: 20
+                }}
+                className="relative perspective-1000"
               >
-                <Card className="group hover:-translate-y-2 transition-all duration-300 glass-card border-none h-full">
-                  <CardHeader>
+                <Card className="group transition-all duration-300 glass-card border-none h-full overflow-hidden shadow-lg hover:shadow-primary/20">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <CardHeader className="relative z-10">
                     <CardTitle className="text-xl group-hover:text-primary transition-colors flex items-center gap-3">
-                      {skillIcons[skill.name] || <Code size={20} />}
+                      <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                        {skillIcons[skill.name] || <Code size={20} />}
+                      </div>
                       {skill.name}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">{skill.details}</p>
+                  <CardContent className="relative z-10">
+                    <p className="text-muted-foreground group-hover:text-foreground transition-colors leading-relaxed">
+                      {skill.details}
+                    </p>
                   </CardContent>
                 </Card>
               </motion.div>

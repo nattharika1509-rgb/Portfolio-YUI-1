@@ -26,45 +26,60 @@
 }
 
 :root {
-  --background: oklch(0.98 0.01 240); /* Very soft blue-ish background */
-  --foreground: oklch(0.2 0.02 240);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.02 240);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.02 240);
-  --primary: oklch(0.85 0.08 340); /* Pastel Pink */
-  --primary-foreground: oklch(0.98 0.01 340);
-  --secondary: oklch(0.9 0.06 220); /* Pastel Blue */
-  --secondary-foreground: oklch(0.2 0.02 220);
-  --muted: oklch(0.95 0.02 220);
-  --muted-foreground: oklch(0.5 0.02 220);
-  --accent: oklch(0.92 0.05 160); /* Pastel Mint */
-  --accent-foreground: oklch(0.2 0.02 160);
-  --destructive: oklch(0.6 0.15 25);
-  --border: oklch(0.9 0.02 240 / 30%);
-  --input: oklch(0.9 0.02 240 / 30%);
-  --ring: oklch(0.85 0.08 340 / 50%);
+  --background: #FAFAFA;
+  --foreground: #09090B;
+  --card: #FFFFFF;
+  --card-foreground: #09090B;
+  --popover: #FFFFFF;
+  --popover-foreground: #09090B;
+  --primary: #18181B;
+  --primary-foreground: #FAFAFA;
+  --secondary: #3F3F46;
+  --secondary-foreground: #FAFAFA;
+  --muted: #E4E4E7;
+  --muted-foreground: #71717A;
+  --accent: #2563EB;
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --border: #E4E4E7;
+  --input: #E4E4E7;
+  --ring: #2563EB;
   --radius: 1rem;
+  
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+  --shadow-xl: 0 20px 25px rgba(0,0,0,0.15);
 }
 
 .dark {
-  --background: oklch(0.15 0.02 240);
-  --foreground: oklch(0.98 0.01 240);
-  --card: oklch(0.2 0.02 240);
-  --card-foreground: oklch(0.98 0.01 240);
-  --popover: oklch(0.2 0.02 240);
-  --popover-foreground: oklch(0.98 0.01 240);
-  --primary: oklch(0.75 0.1 340);
-  --primary-foreground: oklch(0.15 0.02 340);
-  --secondary: oklch(0.3 0.08 220);
-  --secondary-foreground: oklch(0.95 0.02 220);
-  --muted: oklch(0.25 0.05 240);
-  --muted-foreground: oklch(0.7 0.02 240);
-  --accent: oklch(0.3 0.08 160);
-  --accent-foreground: oklch(0.95 0.02 160);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.75 0.1 340 / 50%);
+  --background: #09090B;
+  --foreground: #FAFAFA;
+  --card: #18181B;
+  --card-foreground: #FAFAFA;
+  --popover: #18181B;
+  --popover-foreground: #FAFAFA;
+  --primary: #FAFAFA;
+  --primary-foreground: #18181B;
+  --secondary: #27272A;
+  --secondary-foreground: #FAFAFA;
+  --muted: #27272A;
+  --muted-foreground: #A1A1AA;
+  --accent: #3B82F6;
+  --accent-foreground: #FFFFFF;
+  --border: #27272A;
+  --input: #27272A;
+  --ring: #3B82F6;
 }
 
 @layer base {
@@ -327,31 +342,29 @@
 
 .capy-body {
   width: 120px;
-  height: 70px;
-  background: linear-gradient(135deg, rgb(204, 125, 45), rgb(83, 56, 28));
-  border-radius: 40% 50% 35% 35%;
-  position: absolute;
-  bottom: 15px;
-  left: 30px;
+  height: 80px;
+  background: linear-gradient(135deg, rgb(180, 110, 40), rgb(70, 50, 25));
+  border-radius: 40% 40% 30% 30%;
+  position: relative;
   animation: bodyWalk 0.8s ease-in-out infinite;
 }
 
 .capy-head {
   width: 50px;
   height: 45px;
-  background: linear-gradient(135deg, rgb(204, 125, 45), rgb(83, 56, 28));
-  border-radius: 40% 45% 35% 35%;
+  background: linear-gradient(135deg, rgb(180, 110, 40), rgb(70, 50, 25));
+  border-radius: 45% 45% 35% 35%;
   position: absolute;
-  top: 5px;
-  right: 20px;
+  top: -20px;
+  right: -10px;
   animation: headWalk 0.8s ease-in-out infinite;
 }
 
 .capy-ear {
   width: 12px;
-  height: 15px;
-  background: rgb(180, 110, 40);
-  border-radius: 50% 50% 30% 30%;
+  height: 12px;
+  background: rgb(70, 50, 25);
+  border-radius: 50%;
   position: absolute;
   top: -5px;
 }
@@ -360,11 +373,9 @@
 .capy-ear:last-child { right: 8px; }
 
 .capy-face {
-  position: absolute;
-  bottom: 8px;
-  left: 10px;
-  display: flex;
-  gap: 12px;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .capy-eye {
@@ -372,16 +383,19 @@
   height: 6px;
   background: rgb(30, 20, 10);
   border-radius: 50%;
+  position: absolute;
+  top: 15px;
+  right: 12px;
 }
 
 .capy-nose {
-  width: 10px;
+  width: 12px;
   height: 8px;
-  background: rgb(40, 25, 15);
-  border-radius: 30%;
+  background: rgb(30, 20, 10);
+  border-radius: 40%;
   position: absolute;
+  top: 25px;
   right: -5px;
-  top: 8px;
 }
 
 .capy-legs {
@@ -428,50 +442,33 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: auto;
-  min-width: 8rem;
+  width: 18rem;
+  height: 3rem;
   overflow: hidden;
-  height: 2rem;
-  padding: 0 1rem;
   background-size: 300% 300%;
   cursor: pointer;
   backdrop-filter: blur(1rem);
-  border-radius: 3rem;
+  border-radius: 5rem;
   transition: 0.5s;
   animation: gradient_301 5s ease infinite;
-  border: double 2px transparent;
+  border: double 4px transparent;
   background-image: linear-gradient(#212121, #212121),
-    linear-gradient(
-      137.48deg,
-      #ffdb3b 10%,
-      #fe53bb 45%,
-      #8f51ea 67%,
-      #0044ff 87%
-    );
+    linear-gradient(137.48deg, #ffdb3b 10%, #fe53bb 45%, #8f51ea 67%, #0044ff 87%);
   background-origin: border-box;
   background-clip: content-box, border-box;
 }
 
-.space-btn-inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
 .space-btn strong {
   z-index: 2;
-  font-family: "Avalors Personal Use", sans-serif;
-  font-size: 11px;
-  letter-spacing: 3px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 5px;
   color: #ffffff;
   text-shadow: 0 0 4px white;
 }
 
-#container-stars {
+.space-btn #container-stars {
   position: absolute;
   z-index: -1;
   width: 100%;
@@ -482,14 +479,14 @@
   border-radius: 5rem;
 }
 
-#glow {
+.space-btn #glow {
   position: absolute;
   display: flex;
   width: 12rem;
   z-index: 0;
 }
 
-#glow .circle {
+.space-btn #glow .circle {
   width: 100%;
   height: 30px;
   filter: blur(2rem);
@@ -497,22 +494,42 @@
   z-index: -1;
 }
 
-#glow .circle:nth-of-type(1) {
+.space-btn #glow .circle:nth-of-type(1) {
   background: rgba(254, 83, 186, 0.636);
 }
 
-#glow .circle:nth-of-type(2) {
+.space-btn #glow .circle:nth-of-type(2) {
   background: rgba(142, 81, 234, 0.704);
 }
 
-#stars {
+.space-btn:hover #container-stars {
+  z-index: 1;
+  background-color: #212121;
+}
+
+.space-btn:hover {
+  transform: scale(1.05);
+}
+
+.space-btn:active {
+  border: solid 1px #fe53bb;
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  animation: none;
+}
+
+.space-btn:active .circle {
+  background: #fe53bb;
+}
+
+.space-btn #stars {
   position: relative;
   background: transparent;
   width: 200rem;
   height: 200rem;
 }
 
-#stars::after {
+.space-btn #stars::after {
   content: "";
   position: absolute;
   top: -10rem;
@@ -524,7 +541,7 @@
   background-size: 50px 50px;
 }
 
-#stars::before {
+.space-btn #stars::before {
   content: "";
   position: absolute;
   top: 0;
@@ -559,63 +576,52 @@
   100% { transform: scale(0.75); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
 }
 
-/* Download Button Style - From Uiverse.io by barisdogansutcu */
-.download-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 0 20px;
-  color: white;
-  text-shadow: 2px 2px rgb(116, 116, 116);
-  text-transform: uppercase;
+/* From Uiverse.io by Allyhere */ 
+.btn-donate {
+  --clr-font-main: hsla(0 0% 20% / 100);
+  --btn-bg-1: hsla(194 100% 69% / 1);
+  --btn-bg-2: hsla(217 100% 56% / 1);
+  --btn-bg-color: hsla(360 100% 100% / 1);
+  --radii: 30px;
   cursor: pointer;
-  border: solid 2px black;
-  letter-spacing: 1px;
-  font-weight: 600;
-  font-size: 14px;
-  background-color: hsl(49deg 98% 60%);
-  border-radius: 50px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.5s ease;
+  padding: 0.9em 1.4em;
+  min-width: 120px;
+  min-height: 44px;
+  font-size: var(--size, 1rem);
+  font-weight: 500;
+  transition: 0.8s;
+  background-size: 280% auto;
+  background-image: linear-gradient(
+    325deg,
+    var(--btn-bg-2) 0%,
+    var(--btn-bg-1) 55%,
+    var(--btn-bg-2) 90%
+  );
+  border: none;
+  border-radius: var(--radii);
+  color: var(--btn-bg-color);
+  box-shadow:
+    0px 0px 20px rgba(71, 184, 255, 0.5),
+    0px 5px 5px -1px rgba(58, 125, 233, 0.25),
+    inset 4px 4px 8px rgba(175, 230, 255, 0.5),
+    inset -4px -4px 8px rgba(19, 95, 216, 0.35);
 }
 
-.download-btn:active {
-  transform: scale(0.9);
-  transition: all 100ms ease;
+.btn-donate:hover {
+  background-position: right top;
 }
 
-.download-btn svg {
-  transition: all 0.5s ease;
-  z-index: 2;
+.btn-donate:is(:focus, :focus-visible, :active) {
+  outline: none;
+  box-shadow:
+    0 0 0 3px var(--btn-bg-color),
+    0 0 0 6px var(--btn-bg-2);
 }
 
-.download-btn .play {
-  transition: all 0.5s ease;
-  transition-delay: 300ms;
-}
-
-.download-btn:hover svg {
-  transform: scale(3) translate(50%);
-}
-
-.download-btn .now {
-  position: absolute;
-  left: 0;
-  transform: translateX(-100%);
-  transition: all 0.5s ease;
-  z-index: 2;
-}
-
-.download-btn:hover .now {
-  transform: translateX(10px);
-  transition-delay: 300ms;
-}
-
-.download-btn:hover .play {
-  transform: translateX(200%);
-  transition-delay: 300ms;
+@media (prefers-reduced-motion: reduce) {
+  .btn-donate {
+    transition: linear;
+  }
 }
 
 /* Contact Button - From Uiverse.io by joe-watson-sbf */
@@ -847,26 +853,17 @@
   }
 }
 
+/* --- DECORATIVE ELEMENTS --- */
+@keyframes moveline {
+  0% { transform: translateX(0%); opacity: 0%; }
+  5% { opacity: 100%; }
+  95% { opacity: 100%; }
+  100% { opacity: 0%; transform: translateX(-70%); }
+}
+
 .loaderline {
   width: 50em;
   height: 0.5em;
   border-top: 0.5em dashed var(--capy-color2);
   animation: moveline 10s linear infinite;
-}
-
-@keyframes moveline {
-  0% {
-    transform: translateX(0%);
-    opacity: 0%;
-  }
-  5% {
-    opacity: 100%;
-  }
-  95% {
-    opacity: 100%;
-  }
-  100% {
-    opacity: 0%;
-    transform: translateX(-70%);
-  }
 }

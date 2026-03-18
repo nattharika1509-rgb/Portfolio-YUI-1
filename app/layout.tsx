@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Noto_Sans_Thai } from "next/font/google";
+import { Archivo, Space_Grotesk, Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
 });
 
@@ -32,8 +32,8 @@ export default function RootLayout({
     <html lang="th">
       <body
         suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable} ${notoSansThai.variable} antialiased`}
-        style={{ fontFamily: "var(--font-noto-thai), var(--font-geist-sans), sans-serif" }}
+        className={`${archivo.variable} ${spaceGrotesk.variable} ${notoSansThai.variable} antialiased`}
+        style={{ fontFamily: "var(--font-space-grotesk), var(--font-noto-thai), sans-serif" }}
       >
         {children}
       </body>
