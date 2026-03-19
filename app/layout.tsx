@@ -19,8 +19,10 @@ const notoSansThai = Noto_Sans_Thai({
 });
 
 export const metadata: Metadata = {
-  title: "Nattarika Thepphot - Portfolio",
-  description: "Portfolio of Miss Nattarika Thepphot",
+  title: "Miss Nattarika Thepphot | Professional Portfolio",
+  description: "Professional portfolio of Miss Nattarika Thepphot, a Business Administration graduate with strong skills in administration, document management, and coordination.",
+  keywords: ["Nattarika Thepphot", "Portfolio", "Administration", "Business Administration", "Khon Kaen Technical College"],
+  authors: [{ name: "Nattarika Thepphot" }],
 };
 
 export default function RootLayout({
